@@ -1,11 +1,11 @@
 name    'mcmyadmin'
 version '1.0.0'
-source 'git://github.com/puppetlabs/puppetlabs-ntp'
+source 'git://github.com/joshbeard/puppet-mcmyadmin'
 author 'Josh Beard'
 license 'Apache Version 2.0'
 summary 'MCMyadmin module'
 description 'MCMyadmin module for managing Minecraft servers'
-project_page 'http://github.com/puppetlabs/puppetlabs-ntp'
+project_page 'http://github.com/joshbeard/puppet-mcmyadmin'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 0.1.6'
