@@ -12,6 +12,10 @@ Minecraft itself requires Java, which can optionally be installed with this modu
 
 This module includes an init script, which will launch McMyAdmin from within a screen session.  This module can optionally install screen by using the `manage_screen` parameter.
 
+If all goes well, you should be able to login to the McMyAdmin web interface after using this module.
+
+**Note:** this doesn't configure McMyAdmin or initiate the Minecraft server installation - that is handled via the McMyAdmin web interface.  The only thing configured is the listening address and port.
+
 ###Usage
 ####Basic, default use:
 
@@ -86,7 +90,17 @@ Mono package to be installed.  Default: mono-complete on Debian/Ubuntu. mono-cor
 
 Right now, this module is known to work with recent versions of CentOS, Ubuntu, and Debian.
 
-####TODO
+###TODO
 
 * Better rspec testing
 * Cleanup `mcmyadmin::install`
+
+###Contributing
+
+Contributions very welcome, as well as general comments.
+
+This module is developed independently and not on the behalf of my employer.
+
+Josh Beard (<beard@puppetlabs.com>)
+
+
