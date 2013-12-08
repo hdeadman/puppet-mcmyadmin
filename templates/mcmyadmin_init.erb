@@ -14,7 +14,7 @@
 ### END INIT INFO
 
 #Settings
-SERVICE='MCMA2_Linux_x86_64'
+SERVICE='<%= @mcmyadmin_exec %>'
 USERNAME="<%= @user %>"
 MCPATH="<%= @install_dir %>"
 MAX_HEAP="<%= @heap_size %>"
@@ -57,7 +57,7 @@ mc_stop() {
   else
     echo "$SERVICE was not running."
   fi
-  if ps ax | grep $SERVICE > /dev/null
+  if ps ax | grep -v grep | grep $SERVICE > /dev/null
   then
     echo "$SERVICE could not be shut down... still running."
   else
