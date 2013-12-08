@@ -1,5 +1,7 @@
 #puppet-mcmyadmin
 
+![Minecraft](http://i.imgur.com/AOJ7jxN.png)
+
 ###Overview
 
 This module will install [McMyAdmin](http://www.mcmyadmin.com/), a Minecraft control panel.
