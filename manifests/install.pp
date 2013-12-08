@@ -63,6 +63,12 @@ class mcmyadmin::install inherits mcmyadmin {
     require => Exec['mcmyadmin_install'],
   }
 
+  file_line { 'webserver_addr_local':
+    path    => "${::mcmyadmin::install_dir}/McMyAdmin.conf",
+    line    => "Server.Address=localhost:${::mcmyadmin::webserver_addr}",
+    match   => 'Server.Address=localhost:.*',
+    require => Exec['mcmyadmin_install'],
+  }
 
   service { 'mcmyadmin':
     ensure  => running,
