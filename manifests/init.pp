@@ -9,6 +9,7 @@ class mcmyadmin (
   $webserver_addr = $mcmyadmin::params::webserver_addr,
   $manage_java    = true,
   $manage_screen  = true,
+  $manage_mono    = true,
 ) inherits mcmyadmin::params {
 
   validate_string($architecture)
@@ -51,8 +52,15 @@ class mcmyadmin (
   }
 
   if $manage_screen {
-    package {'screen':
+    package { 'screen':
       before => Service['mcmyadmin']
+    }
+  }
+
+  if $manage_mono {
+    package { $mono_pkg:
+      ensure => installed,
+      before => Exec['mcmyadmin_install'],
     }
   }
 
