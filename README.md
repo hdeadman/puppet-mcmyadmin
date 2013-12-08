@@ -6,7 +6,7 @@ This module will install [McMyAdmin](http://www.mcmyadmin.com/), a Minecraft con
 
 ###Details
 
-McMyAdmin uses Mono, which is installed with the 64-bit version (in a strange manner).  If you install McMyAdmin 32-bit, you will need to install Mono on your own.
+McMyAdmin uses Mono, which is installed using McMyAdmin's goofy method with the 64-bit version (in a strange manner).  If you install McMyAdmin 32-bit, your distro package will be installed.
 
 Minecraft itself requires Java, which can optionally be installed with this module by using the `manage_java` parameter.
 
@@ -71,6 +71,16 @@ Whether to install Java or not.  Required for Minecraft.
 Boolean: true/false
 
 Whether to install screen or not.  The init script executes McMyAdmin within a screen session.
+
+####`manage_mono`
+
+Boolean: true/false
+
+Whether to install mono distro package.  This is only relevant when `architecture` isn't '64', which only applies to Linux.  Note: EPEL is required on RedHat-like systems.
+
+####`mono_pkg`
+
+Mono package to be installed.  Default: mono-complete on Debian/Ubuntu. mono-core on RedHat/CentOS (EPEL is required)
 
 ###Limitations
 
