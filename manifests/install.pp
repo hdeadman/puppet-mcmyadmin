@@ -3,6 +3,7 @@ class mcmyadmin::install inherits mcmyadmin {
   if $::mcmyadmin::architecture == '64' {
     $download_src = 'http://mcmyadmin.com/Downloads/MCMA2_glibc25.zip'
     $install_cmd  = "${::mcmyadmin::install_dir}/MCMA2_Linux_x86_64"
+    $creates      = "MCMA2_Linux_x86_64"
 
     staging::file { 'mcmyadmin_etc.zip':
       source => 'http://mcmyadmin.com/Downloads/etc.zip',
@@ -18,6 +19,7 @@ class mcmyadmin::install inherits mcmyadmin {
   else {
     $download_src = 'http://mcmyadmin.com/Downloads/MCMA2-Latest.zip'
     $install_cmd  = "/usr/bin/env mono ${::mcmyadmin::install_dir}/McMyAdmin.exe"
+    $creates      = "McMyAdmin.exe"
   }
 
   staging::file { 'mcmyadmin.zip':
@@ -27,7 +29,7 @@ class mcmyadmin::install inherits mcmyadmin {
     target  => $::mcmyadmin::install_dir,
     user    => $::mcmyadmin::user,
     group   => $::mcmyadmin::group,
-    creates => "${::mcmyadmin::install_dir}/MCMA2_Linux_x86_64",
+    creates => "${::mcmyadmin::install_dir}/${creates}",
   }~>
   exec { 'mcmyadmin_install':
     command     => "${install_cmd} -nonotice -setpass ${::mcmyadmin::password} -configonly",
