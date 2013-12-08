@@ -17,7 +17,7 @@ class mcmyadmin::install inherits mcmyadmin {
   }
   else {
     $download_src = 'http://mcmyadmin.com/Downloads/MCMA2-Latest.zip'
-    $install_cmd  = 'mono McMyAdmin.exe'
+    $install_cmd  = "mono ${::mcmyadmin::install_dir}/McMyAdmin.exe"
   }
 
   staging::file { 'mcmyadmin.zip':
