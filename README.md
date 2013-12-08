@@ -75,3 +75,8 @@ Whether to install screen or not.  The init script executes McMyAdmin within a s
 ###Limitations
 
 Right now, this module is known to work with recent versions of CentOS, Ubuntu, and Debian.
+
+####TODO
+
+* Better rspec testing
+* Cleanup `mcmyadmin::install`
