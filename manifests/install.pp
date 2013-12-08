@@ -38,12 +38,13 @@ class mcmyadmin::install inherits mcmyadmin {
   }
 
   file { 'init_file':
-    ensure   => file,
-    path     => '/etc/init.d/mcmyadmin',
-    owner    => 'root',
-    group    => '0',
-    mode     => '0755',
-    content  => template('mcmyadmin/mcmyadmin_init.erb'),
+    ensure  => file,
+    path    => '/etc/init.d/mcmyadmin',
+    owner   => 'root',
+    group   => '0',
+    mode    => '0755',
+    content => template('mcmyadmin/mcmyadmin_init.erb'),
+    require => Exec['mcmyadmin_install'],
   }
 
   file_line { 'webserver_port':
