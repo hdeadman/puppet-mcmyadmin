@@ -10,6 +10,7 @@ class mcmyadmin (
   $manage_java    = true,
   $manage_screen  = true,
   $manage_mono    = true,
+  $mono_pkg       = $mcmyadmin::params::mono_pkg,
 ) inherits mcmyadmin::params {
 
   validate_string($architecture)
@@ -18,6 +19,12 @@ class mcmyadmin (
   validate_string($group)
   validate_absolute_path($homedir)
   validate_absolute_path($install_dir)
+  validate_string($webserver_port)
+  validate_string($webserver_addr)
+  validate_bool($manage_java)
+  validate_bool($manage_screen)
+  validate_bool($manage_mono)
+  validate_string($mono_pkg)
 
   user { $user:
     ensure     => present,
