@@ -15,13 +15,13 @@ This module includes an init script, which will launch McMyAdmin from within a s
 ###Usage
 ####Basic, default use:
 
-```
+```puppet
 include mcmyadmin
 ```
 
 Example of running with the webserver on a custom port:
 
-```
+```puppet
 class { 'mcmyadmin':
   webserver_port  => '9090',
 }
