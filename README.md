@@ -8,7 +8,7 @@ This module will install [McMyAdmin](http://www.mcmyadmin.com/), a Minecraft con
 
 ###Details
 
-McMyAdmin uses Mono, which is installed using McMyAdmin's goofy method with the 64-bit version (in a strange manner).  If you install McMyAdmin 32-bit, your distro package will be installed.
+32-bit versions of McMyAdmin use Mono. If you install McMyAdmin 32-bit, your distro package will be installed.  The 64-bit version of McMyAdmin includes configuration files, which will be placed in `/usr/local/etc/`
 
 Minecraft itself requires Java, which can optionally be installed with this module by using the `manage_java` parameter.
 
