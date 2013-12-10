@@ -4,7 +4,7 @@
 
 ###Overview
 
-This module will install [McMyAdmin](http://www.mcmyadmin.com/), a Minecraft control panel.
+This module will install [McMyAdmin](http://www.mcmyadmin.com/), a [Minecraft](http://minecraft.net/) control panel.
 
 ###Details
 
@@ -105,4 +105,8 @@ This module is developed independently and not on the behalf of my employer.
 
 Josh Beard (<beard@puppetlabs.com>)
 
+###Copyrights
 
+[McMyAdmin](http://www.mcmyadmin.com/) is Copyright 2013 CubeCoders Limited.
+
+[Minecraft](http://www.minecraft.net/) is Copyright 2009-2013 Mojang.  "Minecraft" is a trademark of Notch Development AB.
