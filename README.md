@@ -34,9 +34,9 @@ class { 'mcmyadmin':
 ```
 
 ###Parameters
-####`architecture`
+####`install_arch`
 
-This determines which version of the McMyAdmin installer will be downloaded and installed.  Default: `64`
+This determines which version of the McMyAdmin installer will be downloaded and installed.  Default: '64' on x86_64/Linux systems; '32' on all others.
 
 ####`password`
 
@@ -82,7 +82,7 @@ Whether to install screen or not.  The init script executes McMyAdmin within a s
 
 Boolean: true/false
 
-Whether to install mono distro package.  This is only relevant when `architecture` isn't '64', which only applies to Linux.  Note: EPEL is required on RedHat-like systems.
+Whether to install mono distro package.  This is only relevant when `install_arch` isn't '64', which only applies to Linux.  Note: EPEL is required on RedHat-like systems.
 
 ####`mono_pkg`
 

@@ -1,5 +1,5 @@
 class mcmyadmin (
-  $architecture   = $mcmyadmin::params::architecture,
+  $install_arch   = $mcmyadmin::params::install_arch,
   $password       = $mcmyadmin::params::password,
   $user           = $mcmyadmin::params::user,
   $group          = $mcmyadmin::params::group,
@@ -13,7 +13,7 @@ class mcmyadmin (
   $mono_pkg       = $mcmyadmin::params::mono_pkg,
 ) inherits mcmyadmin::params {
 
-  validate_string($architecture)
+  validate_string($install_arch)
   validate_string($password)
   validate_string($user)
   validate_string($group)

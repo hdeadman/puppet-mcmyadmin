@@ -1,6 +1,6 @@
 class mcmyadmin::install inherits mcmyadmin {
 
-  if $::mcmyadmin::architecture == '64' {
+  if $::mcmyadmin::install_arch == '64' {
     $download_src   = 'http://mcmyadmin.com/Downloads/MCMA2_glibc25.zip'
     $install_cmd    = "${::mcmyadmin::install_dir}/MCMA2_Linux_x86_64"
     $mcmyadmin_exec = "MCMA2_Linux_x86_64"
