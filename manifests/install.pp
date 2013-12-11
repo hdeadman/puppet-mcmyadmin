@@ -39,16 +39,6 @@ class mcmyadmin::install inherits mcmyadmin {
     cwd         => $::mcmyadmin::install_dir,
   }
 
-  file { 'init_file':
-    ensure  => file,
-    path    => '/etc/init.d/mcmyadmin',
-    owner   => 'root',
-    group   => '0',
-    mode    => '0755',
-    content => template('mcmyadmin/mcmyadmin_init.erb'),
-    require => Exec['mcmyadmin_install'],
-  }
-
   file_line { 'webserver_port':
     path    => "${::mcmyadmin::install_dir}/McMyAdmin.conf",
     line    => "Webserver.Port=${::mcmyadmin::webserver_port}",
@@ -70,9 +60,4 @@ class mcmyadmin::install inherits mcmyadmin {
     require => Exec['mcmyadmin_install'],
   }
 
-  service { 'mcmyadmin':
-    ensure  => running,
-    enable  => true,
-    require => File['init_file'],
-  }
 }

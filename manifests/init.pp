@@ -1,3 +1,4 @@
+# Class mcmyadmin.  See README.md for documentation
 class mcmyadmin (
   $install_arch   = $mcmyadmin::params::install_arch,
   $password       = $mcmyadmin::params::password,
@@ -73,6 +74,7 @@ class mcmyadmin (
 
   anchor { 'mcmyadmin::begin': }->
   class { '::mcmyadmin::install': }->
+  class { '::mcmyadmin::service': }->
   anchor { 'mcmyadmin::end': }
 
 }
