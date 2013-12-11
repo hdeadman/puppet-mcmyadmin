@@ -1,4 +1,4 @@
-name    'mcmyadmin'
+name    'joshbeard-mcmyadmin'
 version '1.0.0'
 source 'git://github.com/joshbeard/puppet-mcmyadmin'
 author 'Josh Beard'
