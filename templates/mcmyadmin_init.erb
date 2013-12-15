@@ -14,54 +14,55 @@
 ### END INIT INFO
 
 #Settings
-SERVICE='<%= @mcmyadmin_exec %>'
-USERNAME="<%= @user %>"
-MCPATH="<%= @install_dir %>"
-MAX_HEAP="<%= @heap_size %>"
-MIN_HEAP="<%= @heap_start %>"
+mcmyadmin_user="<%= @user %>"
+mcmyadmin_session="mcmyadmin"
+mcmyadmin_chdir="<%= @install_dir %>"
+screen_cmd="/usr/bin/env screen"
 
 
 ME=`whoami`
 as_user() {
-  if [ "$ME" == "$USERNAME" ] ; then
+  if [ "$ME" == "${mcmyadmin_user}" ] ; then
     bash -c "$1"
   else
-    su - $USERNAME -c "$1"
+    su - ${mcmyadmin_user} -c "$1"
   fi
 }
 
 mc_start() {
-  if ps ax | grep -v grep |grep $SERVICE > /dev/null
-  then
-    echo "Tried to start but $SERVICE was already running!"
+  if mc_running; then
+    echo "mcmyadmin is already running?"
+    exit 1
   else
-    echo "$SERVICE was not running... starting."
-    cd $MCPATH
-    as_user "cd $MCPATH && screen -dmS mcmyadmin <%= @install_cmd %>"
-    sleep 7
-    if ps ax | grep -v grep | grep -v -i SCREEN | grep $SERVICE > /dev/null
-    then
-      echo "$SERVICE is now running."
-    else
-      echo "Could not start $SERVICE."
-    fi
+    as_user "cd ${mcmyadmin_chdir} && screen -dmS ${mcmyadmin_session} <%= @install_cmd %> <%= @mcma_run_args %>"
   fi
 }
 
 mc_stop() {
-  if ps ax | grep -v grep | grep $SERVICE > /dev/null
-  then
-    echo "$SERVICE is running... stopping."
-      ## Add a line for each task for each Minecraft server you're controlling
-      as_user "screen -p 0 -S mcmyadmin -X eval 'stuff \"quit\"\015'"
+  if mc_running; then
+    as_user "screen -p 0 -S ${mcmyadmin_session} -X eval 'stuff \"/quit\"\015'"
   else
-    echo "$SERVICE was not running."
+    echo "mcmyadmin was not running."
+    exit 1
   fi
-  if ps ax | grep -v grep | grep $SERVICE > /dev/null
-  then
-    echo "$SERVICE could not be shut down... still running."
+}
+
+mc_status() {
+  if mc_running; then
+    echo "mcmyadmin is running."
+    exit 0
   else
-    echo "$SERVICE is shut down."
+    echo "mcmyadmin is not running."
+    exit 1
+  fi
+}
+
+mc_running() {
+  check=`su -m ${mcmyadmin_user} -c "${screen_cmd} -ls" | grep ${mcmyadmin_session}`
+  if [ "$check" ]; then
+    return 0
+  else
+    return 1
   fi
 }
 
@@ -78,13 +79,7 @@ case "$1" in
     mc_start
   ;;
   status)
-    if ps ax | grep -v grep | grep $SERVICE > /dev/null
-    then
-      echo "$SERVICE is running."
-    else
-      echo "$SERVICE is not running."
-      exit 1
-    fi
+    mc_status
   ;;
 
   *)
