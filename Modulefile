@@ -3,7 +3,7 @@ version '1.1.0'
 source 'git://github.com/joshbeard/puppet-mcmyadmin'
 author 'Josh Beard'
 license 'Apache Version 2.0'
-summary 'MCMyadmin module'
+summary 'Install the McMyAdmin control panel for managing Minecraft servers"
 description 'MCMyadmin module for managing Minecraft servers'
 project_page 'http://github.com/joshbeard/puppet-mcmyadmin'
 
