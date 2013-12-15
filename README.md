@@ -114,6 +114,18 @@ This is `/opt/staging` on Linux (as set by the `staging` module) and `/var/tmp/s
 
 You probably don't need to change this parameter.
 
+####`mcma_run_args`
+
+Command-line arguments to pass to the MCMA binary when running.
+
+Default: empty
+
+####`mcma_install_args`
+
+Command-line arguments to pass to the MCMA binary when installing.
+
+Default: empty
+
 ###Limitations
 
 This has been tested on CentOS, Ubuntu, and FreeBSD 9.2 with pkgng.
