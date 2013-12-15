@@ -51,8 +51,10 @@ mcmyadmin_stop() {
 mcmyadmin_status() {
   if mcmyadmin_running; then
     echo "mcmyadmin is running."
+    exit 0
   else
     echo "mcmyadmin is not running."
+    exit 1
   fi
 }
 
