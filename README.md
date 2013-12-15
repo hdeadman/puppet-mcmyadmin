@@ -155,10 +155,6 @@ Package {
 
 This will set `pkgng` to be the default provider for package installation.
 
-The `staging` module that is used by this module needs `wget` or `curl` installed.
-It also uses a directory called `/opt` for staging, which doesn't exist by
-default on FreeBSD systems.
-
 ###Contributing
 
 Contributions very welcome, as well as general comments.
