@@ -10,8 +10,12 @@ class mcmyadmin (
   $webserver_addr = $mcmyadmin::params::webserver_addr,
   $manage_java    = true,
   $manage_screen  = true,
-  $manage_mono    = true,
+  $manage_mono    = $mcmyadmin::params::manage_mono,
   $mono_pkg       = $mcmyadmin::params::mono_pkg,
+  $screen_pkg     = $mcmyadmin::params::screen_pkg,
+  $manage_curl    = $mcmyadmin::params::manage_curl,
+  $curl_pkg       = $mcmyadmin::params::curl_pkg,
+  $staging_dir    = $mcmyadmin::params::staging_dir,
 ) inherits mcmyadmin::params {
 
   validate_string($install_arch)
@@ -53,22 +57,44 @@ class mcmyadmin (
   }
 
   if $manage_java {
-    class { 'java':
-      distribution => 'jre',
-      before       => Service['mcmyadmin']
+    if $::osfamily == 'FreeBSD' {
+      package { 'java/openjdk7':
+        ensure => 'installed',
+        before => Service['mcmyadmin']
+      }
+    }
+    else {
+      class { 'java':
+        distribution => 'jre',
+        before       => Service['mcmyadmin']
+      }
     }
   }
 
   if $manage_screen {
-    package { 'screen':
+    package { $screen_pkg:
+      ensure => 'installed',
       before => Service['mcmyadmin']
     }
   }
 
   if $manage_mono {
     package { $mono_pkg:
-      ensure => installed,
+      ensure => 'installed',
       before => Exec['mcmyadmin_install'],
+    }
+  }
+
+  if $manage_curl {
+    package { $curl_pkg:
+      ensure => 'installed',
+      before => Exec['mcmyadmin_install'],
+    }
+  }
+
+  if $staging_dir {
+    class { 'staging':
+      path  => $staging_dir,
     }
   }
 

@@ -1,3 +1,6 @@
+#
+# Class to handle the fetching and installation of mcmyadmin
+#
 class mcmyadmin::install inherits mcmyadmin {
 
   if $::mcmyadmin::install_arch == '64' {

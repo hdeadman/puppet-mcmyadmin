@@ -86,16 +86,66 @@ Whether to install mono distro package.  This is only relevant when `install_arc
 
 ####`mono_pkg`
 
-Mono package to be installed.  Default: mono-complete on Debian/Ubuntu. mono-core on RedHat/CentOS (EPEL is required)
+Mono package to be installed.  Default: mono-complete on Debian/Ubuntu. mono-core on RedHat/CentOS (EPEL is required). lang/mono on FreeBSD.
+
+####`screen_pkg`
+
+Screen package to be installed.
+Default: RedHat/Debian: screen;  FreeBSD: sysutils/screen
+
+####`manage_curl`
+
+Boolean: true/false
+
+Whether to manage the `curl` package or not.  Defaults to `false` on Linux and `true` on FreeBSD.  You probably don't need to change this.  If you're running FreeBSD and are already managing the `curl` package with Puppet, set this parameter to `false`
+
+The `staging` module that this module uses requires `curl` or `wget` to download the remote package, neither of which are installed by default on FreeBSD.
+
+####`curl_pkg`
+
+curl package to be installed.  `curl` on Linux and `ftp/curl` on FreeBSD.
+This parameter doesn't matter if `manage_curl` isn't set to `true`
+
+####`staging_dir`
+
+Full path to the staging directory (see above). This should be persistent across reboots.
+
+This is `/opt/staging` on Linux (as set by the `staging` module) and `/var/tmp/staging` on FreeBSD (as set by the `mcmyadmin` module)
+
+You probably don't need to change this parameter.
 
 ###Limitations
 
-Right now, this module is known to work with recent versions of CentOS, Ubuntu, and Debian.
+This has been tested on CentOS, Ubuntu, and FreeBSD 9.2 with pkgng.
 
 ###TODO
 
 * Better rspec testing
 * Cleanup `mcmyadmin::install`
+
+###FreeBSD Notes
+
+This was tested with `pkgng`
+
+You can use a `pkgng` provider by performing:
+
+```shell
+puppet module install zleslie-pkgng
+```
+
+and doing something like this on your system:
+
+```puppet
+Package {
+  provider => 'pkgng',
+}
+```
+
+This will set `pkgng` to be the default provider for package installation.
+
+The `staging` module that is used by this module needs `wget` or `curl` installed.
+It also uses a directory called `/opt` for staging, which doesn't exist by
+default on FreeBSD systems.
 
 ###Contributing
 

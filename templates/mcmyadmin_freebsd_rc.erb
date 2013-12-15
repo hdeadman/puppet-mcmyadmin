@@ -1,0 +1,70 @@
+#!/bin/sh
+#
+# PROVIDE: mcmyadmin
+# REQUIRE: LOGIN DAEMON NETWORKING mountcritlocal
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local to enable the mcmyadmin server:
+#
+# mcmyadmin_enable="YES"
+#
+
+. /etc/rc.subr
+
+name=mcmyadmin
+rcvar=`set_rcvar`
+
+load_rc_config ${name}
+
+command=/usr/local/bin/screen
+pidfile=/var/run/mcmyadmin.pid
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+status_cmd="${name}_status"
+
+: ${mcmyadmin_enable="NO"}
+
+mcmyadmin_session="mcmyadmin"
+mcmyadmin_user="<%= @user %>"
+mcmyadmin_chdir="<%= @install_dir %>"
+
+mcmyadmin_start() {
+  unset "${rc_arg}_cmd"
+  mcmyadmin_flags="-d -m -S ${mcmyadmin_session} <%= @install_cmd %> <%= @mcma_run_args %>"
+  if mcmyadmin_running; then
+    echo "mcmyadmin already running?"
+  else
+    run_rc_command "start"
+  fi
+}
+
+mcmyadmin_stop() {
+  local cmd
+  cmd="${command} -p 0 -S ${mcmyadmin_session} -X eval 'stuff \"/quit\"\015'"
+  if mcmyadmin_running; then
+    echo "Stopping mcmyadmin."
+    su -m ${mcmyadmin_user} -c "${cmd}"
+  fi
+}
+
+mcmyadmin_status() {
+  if mcmyadmin_running; then
+    echo "mcmyadmin is running."
+  else
+    echo "mcmyadmin is not running."
+  fi
+}
+
+mcmyadmin_running() {
+  local check ses
+  ses="${mcmyadmin_session}"
+  check=`su -m ${mcmyadmin_user} -c "${command} -list" | grep ${ses}`
+  if [ "$check" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+run_rc_command "$1"
