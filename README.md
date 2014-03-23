@@ -2,6 +2,8 @@
 
 ![Minecraft](http://i.imgur.com/AOJ7jxN.png)
 
+[![Build Status](https://travis-ci.org/joshbeard/puppet-mcmyadmin.svg?branch=master)](https://travis-ci.org/joshbeard/puppet-mcmyadmin)
+
 ###Overview
 
 This module will install [McMyAdmin](http://www.mcmyadmin.com/), a [Minecraft](http://minecraft.net/) control panel.
