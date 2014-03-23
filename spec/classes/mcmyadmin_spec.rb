@@ -24,7 +24,7 @@ describe 'mcmyadmin' do
     end
 
     it do should contain_file('/home/minecraft/McMyAdmin').with(
-      'ensure' => 'directory',
+      'ensure' => 'directory'
       )
     end
 
