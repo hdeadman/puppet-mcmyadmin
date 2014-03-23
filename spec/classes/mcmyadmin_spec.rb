@@ -28,6 +28,6 @@ describe 'mcmyadmin' do
       )
     }
 
-    it { should include_class('mcmyadmin::install') }
+    it { should contain_class('mcmyadmin::install') }
 
 end
