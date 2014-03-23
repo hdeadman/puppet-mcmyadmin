@@ -15,18 +15,18 @@ describe 'mcmyadmin' do
     it { should contain_user('minecraft') }
     it { should contain_group('minecraft') }
 
-    it { should contain_file('/home/minecraft').with(
+    it do should contain_file('/home/minecraft').with(
       'ensure' => 'directory',
       'owner'  => 'minecraft',
       'group'  => 'minecraft',
-      'mode'   => '0755',
+      'mode'   => '0755'
       )
-    }
+    end
 
-    it { should contain_file('/home/minecraft/McMyAdmin').with(
+    it do should contain_file('/home/minecraft/McMyAdmin').with(
       'ensure' => 'directory',
       )
-    }
+    end
 
     it { should contain_class('mcmyadmin::install') }
 

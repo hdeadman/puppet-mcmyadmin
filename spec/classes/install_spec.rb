@@ -17,11 +17,11 @@ describe 'mcmyadmin::install' do
     }
   end
 
-  it { should contain_file('init_file').with(
+  it do should contain_file('init_file').with(
     'ensure' => 'file',
     'owner' => 'root',
-    'group' => '0',
+    'group' => '0'
     )
-  }
+  end
 
 end
