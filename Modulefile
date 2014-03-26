@@ -1,5 +1,5 @@
 name    'joshbeard-mcmyadmin'
-version '1.1.1'
+version '2.0.0'
 source 'git://github.com/joshbeard/puppet-mcmyadmin'
 author 'Josh Beard'
 license 'Apache Version 2.0'
