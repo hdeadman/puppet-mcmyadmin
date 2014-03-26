@@ -204,6 +204,7 @@ The `default` instance is special in that it will keep a simple init script call
 
 This has been tested on CentOS, Ubuntu, and FreeBSD 9.2 with pkgng.
 
+The `unzip` tool is required, which isn't installed by default on some systems (Debian) and this module doesn't attempt to manage it.
 
 ## FreeBSD Notes
 
@@ -224,6 +225,7 @@ Package {
 ```
 
 This will set `pkgng` to be the default provider for package installation.
+
 
 ## Contributing
 
