@@ -4,6 +4,7 @@ define mcmyadmin::instance (
   $password           = $name,
   $user               = $name,
   $group              = $name,
+  $user_shell         = '/usr/sbin/nologin',
   $homedir            = "/home/${name}",
   $install_dir        = 'home',
   $mcma_install_args  = '',
@@ -33,12 +34,14 @@ define mcmyadmin::instance (
   validate_string($webserver_addr)
   validate_string($mcma_install_args)
   validate_string($mcma_run_args)
+  validate_string($user_shell)
 
   user { $instance_user:
     ensure     => present,
     managehome => true,
     home       => $instance_homedir,
     gid        => $instance_group,
+    shell      => $user_shell,
   }
 
   group { $instance_group:

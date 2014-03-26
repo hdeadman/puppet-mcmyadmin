@@ -1,3 +1,14 @@
+#
+# Example for FreeBSD.  The only unique thing is that we're using
+# 'pkgng' as the package provider.  If you wanted to do this globally, you'd
+# probably put it in site.pp
+#
+# This will create three instances
+#
+Package {
+  provider => 'pkgng',
+}
+
 include mcmyadmin
 
 mcmyadmin::instance { 'default':
