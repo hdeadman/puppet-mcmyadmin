@@ -152,6 +152,8 @@ Address for the McMyAdmin web service to listen on. Default: `+` (all interfaces
 
 The password to use for the McMyAdmin web admin user.  Default: `${name}`
 
+The user (unix) account on the system will not have a password set.
+
 #### `user`
 
 The user to operate as.  A home directory will be created.  Default: `${name}`
@@ -159,6 +161,10 @@ The user to operate as.  A home directory will be created.  Default: `${name}`
 #### `group`
 
 Group to create.  The `user` will be a member of this.  Default: `${name}`
+
+#### `user_shell`
+
+The shell for the user.  Default: `/usr/sbin/nologin`
 
 #### `homedir`
 
