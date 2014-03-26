@@ -42,10 +42,6 @@ describe 'mcmyadmin' do
         :manage_curl    => false,
         :manage_screen  => false,
         :manage_java    => false,
-        :user           => 'ubuntu_minecraft',
-        :group          => 'ubuntu_minecraft',
-        :homedir        => '/home/ubuntu_minecraft',
-        :install_dir    => '/home/ubuntu_minecraft/mcmyadmin',
         :install_arch   => '64'
       }
     end
@@ -94,10 +90,6 @@ describe 'mcmyadmin' do
           :manage_curl    => false,
           :manage_screen  => false,
           :manage_java    => false,
-          :user           => 'ubuntu_minecraft',
-          :group          => 'ubuntu_minecraft',
-          :homedir        => '/home/ubuntu_minecraft',
-          :install_dir    => '/home/ubuntu_minecraft/mcmyadmin',
           :install_arch   => '32'
         }
       end
