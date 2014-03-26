@@ -1,0 +1,22 @@
+$mcmyadmin_conf_file = '/home/minecraft/McMyAdmin/McMyAdmin.conf'
+
+case fact('osfamily')
+when 'RedHat'
+  $mono_package    = 'mono-core'
+  $curl_package    = 'curl'
+  $screen_package  = 'screen'
+  $service_name    = 'mcmyadmin'
+  $init_script     = '/etc/init.d/mcmyadmin'
+when 'Debian'
+  $mono_package    = 'mono-complete'
+  $curl_package    = 'curl'
+  $screen_package  = 'screen'
+  $service_name    = 'mcmyadmin'
+  $init_script     = '/etc/init.d/mcmyadmin'
+when 'FreeBSD'
+  $mono_package    = 'lang/mono'
+  $curl_package    = 'net/curl'
+  $screen_package  = 'sysutils/screen'
+  $service_name    = 'mcmyadmin'
+  $init_script     = '/usr/local/etc/rc.d/mcmyadmin'
+end
