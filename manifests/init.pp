@@ -35,42 +35,15 @@ class mcmyadmin (
   validate_string($mcma_install_args)
   validate_string($mcma_run_args)
 
-  user { $user:
-    ensure     => present,
-    managehome => true,
-    home       => $homedir,
-    gid        => $group,
-  }
-
-  group { $group:
-    ensure => present,
-  }
-
-  file { $homedir:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
-
-  file { $install_dir:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
-  }
-
   if $manage_java {
     if $::osfamily == 'FreeBSD' {
       package { 'java/openjdk7':
         ensure => 'installed',
-        before => Service['mcmyadmin']
       }
     }
     else {
       class { 'java':
         distribution => 'jre',
-        before       => Service['mcmyadmin']
       }
     }
   }
@@ -78,21 +51,18 @@ class mcmyadmin (
   if $manage_screen {
     package { $screen_pkg:
       ensure => 'installed',
-      before => Service['mcmyadmin']
     }
   }
 
   if $manage_mono {
     package { $mono_pkg:
       ensure => 'installed',
-      before => Exec['mcmyadmin_install'],
     }
   }
 
   if $manage_curl {
     package { $curl_pkg:
       ensure => 'installed',
-      before => Exec['mcmyadmin_install'],
     }
   }
 
@@ -102,9 +72,25 @@ class mcmyadmin (
     }
   }
 
-  anchor { 'mcmyadmin::begin': }->
-  class { '::mcmyadmin::install': }->
-  class { '::mcmyadmin::service': }->
-  anchor { 'mcmyadmin::end': }
+  if $::mcmyadmin::install_arch == '64' {
+    $download_src   = 'http://mcmyadmin.com/Downloads/MCMA2_glibc25.zip'
+    $install_cmd    = "${::mcmyadmin::install_dir}/MCMA2_Linux_x86_64"
+    $mcmyadmin_exec = 'MCMA2_Linux_x86_64'
+
+    staging::file { 'mcmyadmin_etc.zip':
+      source => 'http://mcmyadmin.com/Downloads/etc.zip',
+    }->
+    staging::extract { 'mcmyadmin_etc.zip':
+      target  => '/usr/local',
+      user    => 'root',
+      group   => '0',
+      creates => '/usr/local/etc/mono',
+    }
+  }
+  else {
+    $download_src   = 'http://mcmyadmin.com/Downloads/MCMA2-Latest.zip'
+    $install_cmd    = "/usr/bin/env mono ${::mcmyadmin::install_dir}/McMyAdmin.exe"
+    $mcmyadmin_exec = 'McMyAdmin.exe'
+  }
 
 }
