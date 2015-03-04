@@ -19,7 +19,7 @@ class mcmyadmin (
 
   if $manage_java {
     if $::osfamily == 'FreeBSD' {
-      package { 'java/openjdk7':
+      package { 'java/openjdk8':
         ensure => 'installed',
       }
     }
