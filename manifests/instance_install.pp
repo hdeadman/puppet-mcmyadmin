@@ -10,8 +10,9 @@ define mcmyadmin::instance_install (
   $webserver_port,
   $webserver_addr,
   $install_arch,
+  $use_systemd,
 ) {
-
+  
   if ! defined(Class['mcmyadmin']) {
     fail('You must include the mcmyadmin base class before creating mcmyadmin instances')
   }
@@ -34,7 +35,11 @@ define mcmyadmin::instance_install (
 
   # For backwards-compatibility, if this is the 'default' instance, set an
   # init script simply called 'mcmyadmin'
-  if ($name == 'default') {
+  if ($use_systemd) {
+    $init_script  = "/etc/systemd/system/mcmyadmin@${name}.service"
+    $service_name = "mcmyadmin@${name}"
+  }
+  elsif ($name == 'default') {
     $init_script  = $mcmyadmin::params::init_script
     $service_name = 'mcmyadmin'
   }
@@ -53,7 +58,7 @@ define mcmyadmin::instance_install (
       creates => "${install_dir}/${mcmyadmin_exec}",
       }~>
       exec { "${title}_mcmyadmin_install":
-        command     => "${install_cmd} ${mcma_install_args} -nonotice -setpass ${password} -configonly",
+        command     => "${install_cmd} ${mcma_install_args} -nonotice -setpass \"${password}\" -configonly",
         user        => $user,
         refreshonly => true,
         logoutput   => true,
@@ -82,16 +87,30 @@ define mcmyadmin::instance_install (
         require => Exec["${title}_mcmyadmin_install"],
       }
 
-      file { "${name}_init_file":
-        ensure     => 'file',
-        path       => $init_script,
-        owner      => 'root',
-        group      => '0',
-        mode       => '0755',
-        content    => template("mcmyadmin/${mcmyadmin::params::init_templ}"),
-        require    => File_line["${title}_webserver_addr_local"],
+      if !$use_systemd {
+        file { "${name}_init_file":
+          ensure     => 'file',
+          path       => $init_script,
+          owner      => 'root',
+          group      => '0',
+          mode       => '0755',
+          content    => template("mcmyadmin/${mcmyadmin::params::init_templ}"),
+          require    => File_line["${title}_webserver_addr_local"],
+        }
+      } else {
+        include systemd
+        
+        file { "${name}_init_file":
+          ensure     => 'file',
+          path       => $init_script,
+          owner      => 'root',
+          group      => '0',
+          mode       => '0644',
+          content    => template("mcmyadmin/mcmyadmin.service.erb"),
+          require    => File_line["${title}_webserver_addr_local"],
+        } ~>
+        Exec['systemctl-daemon-reload']
       }
-
       service { $service_name:
         ensure  => 'running',
         enable  => true,

@@ -14,12 +14,13 @@ define mcmyadmin::instance (
   include mcmyadmin::params
 
   # Do some sanitization of parameters
+  # Should we really be sanitizing password? Probably should just validate and reject
   $instance_password    = regsubst($password,'[^0-9a-zA-Z_]+','', 'G')
   $instance_user        = regsubst($user,'[^0-9a-zA-Z_]+','', 'G')
   $instance_group       = regsubst($group,'[^0-9a-zA-Z_]+','', 'G')
   $instance_homedir     = regsubst($homedir,'[^0-9a-zA-Z_\/\-\.]+','', 'G')
   $instance_name        = regsubst($title,'[^0-9a-zA-Z_]+','', 'G')
-
+  
   $instance_install_dir = $install_dir ? {
     'home'  => regsubst("${instance_homedir}/McMyAdmin",'[^0-9a-zA-Z_\/\-\.]+','', 'G'),
     default => regsubst($install_dir,'[^0-9a-zA-Z_\/\-\.]+','', 'G')
@@ -72,6 +73,7 @@ define mcmyadmin::instance (
     webserver_addr    => $webserver_addr,
     install_arch      => $mcmyadmin::params::install_arch,
     require           => File[$instance_install_dir],
+    use_systemd       => $mcmyadmin::params::use_systemd,
   }
 
 }

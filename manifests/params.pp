@@ -9,8 +9,13 @@ class mcmyadmin::params {
   $install_dir    = "${homedir}/McMyAdmin"
   $webserver_port = '8080'
   $webserver_addr = '+'
-
-  if ($::architecture == 'x86_64') and ($::kernel == 'Linux') {
+  
+  # get systemd fact
+  include systemd
+  
+  $use_systemd = $::systemd
+  
+  if ($::architecture =~ /.*64/) and ($::kernel == 'Linux') {
     $install_arch = '64'
     $manage_mono  = false
   }

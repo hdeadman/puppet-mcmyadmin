@@ -1,0 +1,14 @@
+[Unit]
+Description=McMyAdmin %i
+
+[Service]
+WorkingDirectory=<%= @install_dir %>
+User=<%= @user %>
+
+ExecStart=/usr/bin/screen -DmS mc-mcma-%i ./<%= @mcmyadmin_exec %>
+
+ExecStop=/usr/bin/screen -p 0 -S mc-mcma-%i -X eval 'stuff "/quit"\\015'
+ExecStop=/bin/sleep 10
+
+[Install]
+WantedBy=multi-user.target
