@@ -87,6 +87,14 @@ define mcmyadmin::instance_install (
         require => Exec["${title}_mcmyadmin_install"],
       }
 
+      file { "${install_dir}/Minecraft/eula.txt":
+        ensure  => file,
+        owner   => $user,
+        group   => $group,
+        content => template('mcmyadmin/eula.txt.erb'),
+        require => Exec["${title}_mcmyadmin_install"],
+      }
+
       if !$use_systemd {
         file { "${name}_init_file":
           ensure     => 'file',
